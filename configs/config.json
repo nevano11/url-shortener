@@ -1,0 +1,10 @@
+{
+  "logger" : {
+    "log-level": "debug"
+  },
+  "redis" : {
+    "addr" : "6000",
+    "password": "",
+    "entryTime" : 0
+  }
+}
