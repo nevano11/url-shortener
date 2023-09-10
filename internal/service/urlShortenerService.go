@@ -1,20 +1,18 @@
 package service
 
 import (
-	"crypto/md5"
-	"fmt"
 	"url-shortener/internal/repository"
 )
 
 type UrlShortenerService struct {
-	repos repository.KeyValueRepository
+	repos  repository.KeyValueRepository
+	hasher Hasher
 }
 
-const salt = "altcraft"
-
-func NewUrlShortenerService(repos repository.KeyValueRepository) *UrlShortenerService {
+func NewUrlShortenerService(repos repository.KeyValueRepository, hasher Hasher) *UrlShortenerService {
 	return &UrlShortenerService{
-		repos: repos,
+		repos:  repos,
+		hasher: hasher,
 	}
 }
 
@@ -24,16 +22,6 @@ func (uss *UrlShortenerService) GetUrl(hash string) (string, error) {
 }
 
 func (uss *UrlShortenerService) SaveUrl(url string) (string, error) {
-	hash := encrypt(url)
+	hash := uss.hasher.Encrypt(url)
 	return hash, uss.repos.Set(hash, url)
-}
-
-func encrypt(url string) string {
-	// hash url
-	hash := md5.New()
-	hash.Write([]byte(url))
-	urlHash := fmt.Sprintf("%x", hash.Sum([]byte(salt)))
-
-	// get final hash
-	return urlHash[len(urlHash)-1-8 : len(urlHash)-1]
 }
