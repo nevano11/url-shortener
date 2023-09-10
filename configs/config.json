@@ -1,10 +1,13 @@
 {
-  "logger" : {
+  "logger": {
     "log-level": "debug"
   },
-  "redis" : {
-    "addr" : "6000",
+  "redis": {
+    "addr": "6001",
     "password": "",
-    "entryTime" : 0
+    "entryTime": 0
+  },
+  "server": {
+    "port": "8080"
   }
 }

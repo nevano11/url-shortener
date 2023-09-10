@@ -1,0 +1,65 @@
+basePath: /
+host: localhost:8080
+info:
+  contact: {}
+  description: implementation of a test task for Altcraft company
+  title: Url shortener api
+  version: "1.0"
+paths:
+  /a:
+    get:
+      consumes:
+      - application/json
+      description: method create shortcut to site
+      parameters:
+      - description: Site url
+        in: query
+        name: url
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema: {}
+        "404":
+          description: Not Found
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: register
+  /s/{urlHash}:
+    get:
+      consumes:
+      - application/json
+      description: method redirect to site by shortcut
+      parameters:
+      - description: Site hash
+        in: path
+        name: urlHash
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Found
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema: {}
+        "404":
+          description: Not Found
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: redirect
+swagger: "2.0"
