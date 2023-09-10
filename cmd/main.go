@@ -46,10 +46,13 @@ func main() {
 		logrus.Fatalf("Failed to ping database: %s", err.Error())
 	}
 
+	// Hasher
+	hashProvider := service.NewMd5Hasher()
+
 	// Repository, service, handler
 	rep := repository.NewRedisRepository(rdb, &ctx)
 	//rep := repository.NewFakeKVRepository()
-	ser := service.NewService(service.NewUrlShortenerService(rep))
+	ser := service.NewService(service.NewUrlShortenerService(rep, hashProvider))
 	han := handler.NewHandler(ser)
 
 	// Routes
